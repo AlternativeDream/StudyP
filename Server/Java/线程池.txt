@@ -1,0 +1,32 @@
+线程池 复用线程 减少系统开销
+线程执行完一个任务 不被销毁 继续执行其他任务
+
+
+线程池核心类 ThreadPoolExecutor
+
+corePoolSize：核心池大小 默认线程池没有任何线程 有任务创建线程
+prestartAllCoreTheards
+prestartCoreThreads 预创建线程
+默认情况 线程池创建后 线程数为0 有任务创建线程执行 线程数达到corePoolSize 多出的任务进入缓存队列
+
+maximumPoolSize：线程池最大线程数 线程池最多能创建的线程数
+
+keepAliveTime：线程未执行任务到达一定时间终止 默认只有线程池中线程数大于corePoolSize 且空闲时间达到keepAliveTime 终止线程  若调用allowCoreThreadTimeOut方法 keepAliveTime会起作用直到线程数为0
+unit 时间单位 workQueue 阻塞队列 存储等待执行的任务
+threadFactory 线程工厂 创建线程   handler 拒绝处理任务策略
+
+
+execute方法 向线程池提交一个任务 交由线程池执行
+submit 方法 向线程池提交一个任务 返回任务执行的结果 （实际调用execute）
+关闭线程池 
+shutdown 不接受新任务 等待任务执行完毕
+shutdownNow 不接受新任务 尝试结束当前任务
+
+以上为线程池主要API
+
+
+线程池状态 
+runing 运行状态 
+shutdown 调用shutdown方法后进入该状态 不接受任务 等待任务执行完毕
+stop 调用shutdownNow 进入该状态 不接受任务 尝试结束当前任务
+terminated 所有工作线程销毁 缓存队列清空或执行结束 进入该状态

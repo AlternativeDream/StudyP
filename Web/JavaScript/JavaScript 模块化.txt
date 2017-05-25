@@ -1,0 +1,67 @@
+模块化 在传统的软件工程中，为类提供私有和公有封装的方法
+JavaScript中，没有声明类的方式，但是可以使用闭包封装私有属性与方法，模拟类的概念。
+JS通过这种方式，可以使一个单独对象拥有私有或公有的属性与方法，防止作用域污染。
+
+JavaScript 模块化
+使用闭包封装私有变量方法，暴露一个接口用于调用，私有变量被限制，只能通过公有方法访问。 可以为返回的对象添加新的属性与方法。
+
+模块化缺点： 修改方法可见性时，需要修改每一个曾经使用过该方法的地方，耦合度不理想。新添加的方法无法访问原有的私有变量与方法，无法轻易扩展私有方法。
+
+
+
+模块化脚本加载器
+
+AMD 异步模块加载机制
+define方法 模块定义
+require方法 模块加载
+
+define(
+   [module-name?] 模块标识 可省略 没有标识为匿名模块
+   [array-of-dependencies?] 依赖模块 可省略
+   [module-factory-or-object] 模块实现，或是一个JS对象
+)
+
+CommonJS模块 指定一个简单的API来声明在浏览器外部工作的模块
+结构上，CommonJS模块不使用define定义。CommonJS模块由两部分组成
+export  导出模块 把方法暴露给其他模块
+require 导入模块
+
+CommonJS被认为更适合服务端开发 nodeJS使用CommonJS规范。
+
+
+AMD：采用浏览器优先的开发方法，选择异步行为和简化的后向兼容性，当没有I/O概念。支持对象、函数、构造函数以及其他类型的对象，在浏览器中原生运行。
+
+CommonJS：采用服务器优先的方法，假定同步行为，没有全局概念负担，仅将对象作为模块给予支持。CommonJS支持非包装模块，更接近下一代ES Harmony规范。
+
+
+ES6 ES Harmony模块
+import 声明绑定一个模块，作为局部变量导出，并能被重命名，以避免命名冲突
+export 声明一个外部可见模块的本地绑定，其他模块能读取导出，但无法进行修改。模块可以导出子模块，但不能导出其他地方定义的模块。导出可以重命名
+
+
+
+
+require.js插件 加载模块采用AMD标准 官方提供r.js用户模块的打包
+require.config({
+      baseUrl: 'module/js',
+		配置path下的统一目的，以便path中不会分别配置
+      path: {
+		配置module路径，以便引用时不用写全路径
+          module1: 'module1',
+          module2: 'module2',
+          module3: 'http://www.site.com/module3'
+		若引用的是第三方，可以全部全路径
+     },
+      shim: {
+	对不符合AMD规则的模块引用
+          'underscore': {
+               exports: '_'
+		配置其原对外接口
+          },
+          'backbone': {
+               deps: ['underscore', 'jquery'],
+		配置其依赖项
+               exports: 'Backbone'
+         }
+     }
+ });

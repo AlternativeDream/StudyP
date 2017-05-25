@@ -1,0 +1,78 @@
+
+进程与线程共有五个阶段 创建 就绪 运行 阻塞 终止
+进程
+独立的代码与数据空间 切换有较大开销 包含一到多个线程
+
+线程
+共享代码与数据空间 有独立的运行栈与程序计数器 切换开销小 
+继承Thread类   资源不共享 s/getPriority 设置线程优先级
+实现Runadble接口  资源共享 适合多个相同程序代码处理同一个资源 避免单继承机制 代码被多个线程共享 代码和数据独立
+
+
+start方法 将线程变为可运行态 开始运行时间由操作系统决定（start方法不可重复调用）
+线程程序无序执行 执行顺序不确定 执行结果随机
+
+run方法 多线程程序的约定 所有多线程代码在run中执行
+
+
+wait方法 属于Object 让出对象锁 JVM会把线程放入等待池 由针对该对象的notify方法 或 notifyAll方法唤醒
+
+sleep方法 属于Thread 不释放对象锁 结束后转入就绪状态
+
+join方法 属于Thread 主线程等待子线程终止 子线程执行完成主线程才结束
+
+yield方法 属于Thread 线程让步 暂停当前执行线程对象 让出给相同或更高优先级的线程 从运行状态转为可运行状态 可能被线程调度程序再次运行
+
+interrupt方法 中断线程 如果中断的线程还未释放资源 回导致资源无法释放
+
+sleep与yield区别 
+sleep 当前线程进入停滞状态 在指定时间内肯定不会被执行
+yield 当前线程重新回到可执行状态 可能进入可执行状态后又被执行
+
+
+wait与sleep的区别
+共同点 都是多线程环境下， 都可以在程序调用处阻塞指定的毫秒数，并返回
+都可以通过interrupt方法打断线程的暂停状态 并抛出interrupterException
+
+不同点
+Thread类 sleep yield join
+Object   wait notify notifyAll
+每个对象都有一个锁来控制同步访问 Synchronized关键字可以和对象的锁交互，来实现线程的同步
+sleep不释放锁 wait释放锁
+wait notify notifyAll 只能在同步控制方法或同步控制块里面使用 sleep没有使用限制
+sleep必须捕获异常 wait等不需要
+
+最大区别 sleep 睡眠时 保持对象锁 仍然占有对象锁
+         wait  睡眠时 释放对象锁
+但是wait()和sleep()都可以通过interrupt()方法打断线程的暂停状态，从而使线程立刻抛出InterruptedException （该方式问题较多）
+
+
+线程类常用方法
+    sleep(): 强迫一个线程睡眠Ｎ毫秒。 
+　　isAlive(): 判断一个线程是否存活。 
+　　join(): 等待线程终止。 
+　　activeCount(): 程序中活跃的线程数。 
+　　enumerate(): 枚举程序中的线程。 
+    currentThread(): 得到当前线程。 
+　　isDaemon(): 一个线程是否为守护线程。 
+　　setDaemon(): 设置一个线程为守护线程。(用户线程和守护线程的区别在于，是否等待主线程依赖于主线程结束而结束) 
+　　setName(): 为线程设置一个名称。 
+　　wait(): 强迫一个线程等待。 
+　　notify(): 通知一个线程继续运行。 
+　　setPriority(): 设置一个线程的优先级。
+
+
+
+synchronized关键字的作用域
+对象实例内 synchronized关键字可以防止多个线程同时访问这个对象的synchronized方法（如果有多个synchronized方法 一个线程访问其中一个 其他所有线程不能访问任何一个synchronized方法）
+不同对象实例的synchronized方法不干扰 其他线程可以同时访问相同类的不同实例中的synchronized方法
+
+除了方法前用synchronized关键字，synchronized关键字还可以用于方法中的某个区块中，表示只对这个区块的资源实行互斥访问。用法是: synchronized(this){/*区块*/}，它的作用域是当前对象
+
+synchronized方法不能继承 需要显示指定为synchronized方法
+
+
+
+synchronized关键字取得的锁都是对象
+每个对象只有一个锁 lock 与之关联
+实现同步需要很大的系统开销 可能造成死锁

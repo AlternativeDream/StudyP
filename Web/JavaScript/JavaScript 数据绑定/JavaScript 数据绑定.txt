@@ -1,0 +1,15 @@
+数据绑定 即是将数据的变化绑定到UI，同时UI的变化又和数据同步，不用管数据对UI的影响，也不用管UI变化造成的数据变化，统一数据操作的入口。
+
+双向数据绑定底层实现方式大概两种：
+手动绑定，同时使用dirty,check循环监听 （AngularJS）
+前端数据劫持，使用访问器属性defineProperty （Vue.js）
+
+访问器属性 defineProperty IE8+以上支持 所以Vue 不支持IE8及以下版本。
+访问器 defineProperty 的 get/set 方法，数据变动时，触发 set 方法，在 set 方法中，同步更新UI数据。
+
+UI数据变化使用 addEventListener 监听键盘事件 keyup （keydown事件发生时，value的值还未发生变化，不可使用keydown）对数值进行修改，同时数值的修改同步改变UI的值。
+
+
+bind.js 实现简单的双向数据绑定 (使用前端数据劫持方式，直接操作DOM方式，实现数据绑定功能，效率低下)
+
+性能改进使用 DocumentFragment (文档片段) 作为节点容器，插入DOM中时，只有子节点插入目标节点，即为一组节点的容器。使用 DocumentFragment  处理节点，速度和性能优于直接操作DOM。Vue进行编译时，就是将挂载目标的所有子节点劫持到 DocumentFragment 中，进过处理再将整体返回插入挂载节点。

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Page Title</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0">
+	</head>
+	<body>
+        <div class="test">
+            <input type="text" wx-model="test" />
+            <p wx-text="test"></p>
+        </div>
+        <script type="text/javascript" src="bind.js"></script>
+        <script type="text/javascript">
+            var a =new WX({
+                el: '.test',
+                data: {
+                    test: 'test'
+                }
+            });
+        </script>
+	</body>
+</html>

@@ -1,0 +1,25 @@
+前端 JavaScript 
+前端框架 Vue.js <- React.js <- AngularJs
+NodeJs 服务器端  内置框架express
+JS架包整合 打包工具 webpack -> gulp -> grunt
+
+样式语言 预处理器 SASS LASS
+后处理器（...）
+
+
+后端 Java
+J2EE JavaWeb框架 Spring Struts2 Hibernate Mybatis  基于注解SpringMVC
+
+(备选)PHP -> Python -> C# -> C++ -> GO -> C
+
+
+管理工具 git -> maven
+前端架包管理工具 npm
+
+
+
+
+Java 线程与进程 线程池
+JavaScript jQuery源码及思想 模块化 虚拟DOM原理 数据绑定 组件概念
+ES6 语法
+
